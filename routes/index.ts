@@ -7,4 +7,5 @@ export const InitRoutes = (app: Express) => {
 
 	app.post('/login', Auth.LoginUser);
 	app.post('/register', Auth.RegisterUser);
+	app.get('/me', Auth.GetMe);
 }

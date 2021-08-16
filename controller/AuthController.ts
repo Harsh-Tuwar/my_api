@@ -26,7 +26,7 @@ export const LoginUser = (req: express.Request, res: express.Response) => {
 				const payload = { id: _id };
 				const signinOptions = { subject: email };
 				const signedToken = jwtSign(payload, signinOptions);
-				
+
 				return res.status(200).json({ auth: true, token: signedToken });
 			} else {
 				return res.status(401).json({ auth: false, token: null });
@@ -65,6 +65,21 @@ export const RegisterUser = async (req: express.Request, res: express.Response) 
 		});
 };
 
-export const GetAll = (req: express.Request, res: express.Response) => {
-
-}
+export const GetMe = async (req: express.Request, res: express.Response) => {
+	User.findById(res.app.locals.userId).then((d: any) => {
+		console.log(d);
+		return res.status(200).json({ d })
+	}).catch((err: Error) => {
+		return res.status(500).json({ err });
+	});
+	// function(error: any, user: any) {
+	// 	if (error) {
+	// 	  return res.status(500).send(`Server error: ${error.message}`);
+	// 	}
+	// 	if (user) {
+	// 		res.status(200).send({ id: user.id, email: user.email, name: user.name });
+	// 	} else {
+	// 		return res.status(404).send(`User not found (_id: ${req.userId})`);
+	// 	}
+	// });	
+};
